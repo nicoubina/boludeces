@@ -9,6 +9,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -102,6 +103,23 @@ public class GlobalExceptionHandler {
         log.warn("Intento de acceso con credenciales inválidas: {}", ex.getMessage());
         return problem;
     }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ProblemDetail handleMissingRequestParam(MissingServletRequestParameterException ex) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problem.setTitle("Parámetro requerido faltante");
+        problem.setDetail("Falta un parámetro requerido en la solicitud");
+        problem.setType(URI.create("https://http.dev/problems/missing-parameter"));
+
+        Map<String, String> faltantes = new HashMap<>();
+        faltantes.put(ex.getParameterName(), ex.getParameterType());
+        problem.setProperty("faltantes", faltantes);
+
+        log.warn("Parámetro requerido faltante: nombre='{}', tipo='{}'", ex.getParameterName(), ex.getParameterType());
+        return problem;
+    }
+
+    
 }
 
 

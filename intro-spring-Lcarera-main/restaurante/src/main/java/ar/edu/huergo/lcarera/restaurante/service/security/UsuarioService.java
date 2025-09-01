@@ -24,6 +24,9 @@ public class UsuarioService {
     }
 
     public Usuario registrar(Usuario usuario, String password, String verificacionPassword) {
+        if (password == null || verificacionPassword == null) {
+            throw new IllegalArgumentException("Las contraseñas no pueden ser null");
+        }
         if (!password.equals(verificacionPassword)) {
             throw new IllegalArgumentException("Las contraseñas no coinciden");
         }

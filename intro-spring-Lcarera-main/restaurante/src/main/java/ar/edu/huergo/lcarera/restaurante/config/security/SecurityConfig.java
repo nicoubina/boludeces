@@ -39,6 +39,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/pedidos").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/pedidos/reporte").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/platos/**")
                         .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/ingredientes/**")
                         .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/platos/**")
