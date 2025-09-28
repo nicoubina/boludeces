@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - Restaurante Huergo'">Acerca del Restaurante - Restaurante Huergo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- CSS personalizado -->
+    <link th:href="@{/css/restaurante.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/web/}">
+                <i class="fas fa-utensils me-2"></i>
+                Restaurante Huergo
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/}">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/platos}">
+                            <i class="fas fa-pizza-slice me-1"></i>Platos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/ingredientes}">
+                            <i class="fas fa-carrot me-1"></i>Ingredientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/web/acerca}">
+                            <i class="fas fa-info-circle me-1"></i>Acerca
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container mt-4">
+        <!-- Hero Section -->
+        <div class="row mb-5">
+            <div class="col">
+                <div class="text-center py-5 bg-primary text-white rounded">
+                    <h1 class="display-3 mb-3" th:text="${nombre}">Restaurante Huergo</h1>
+                    <p class="lead" th:text="${descripcion}">Un restaurante moderno con los mejores platos de la ciudad</p>
+                    <i class="fas fa-star text-warning fa-2x"></i>
+                    <i class="fas fa-star text-warning fa-2x"></i>
+                    <i class="fas fa-star text-warning fa-2x"></i>
+                    <i class="fas fa-star text-warning fa-2x"></i>
+                    <i class="fas fa-star text-warning fa-2x"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información del restaurante -->
+        <div class="row mb-5">
+            <div class="col-lg-6">
+                <div class="card h-100 shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="card-title mb-0">
+                            <i class="fas fa-history me-2"></i>Nuestra Historia
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Desde 2020, <strong>Restaurante Huergo</strong> ha sido un referente en la gastronomía local, combinando tradición culinaria con innovación tecnológica.</p>
+                        <p>Nuestro compromiso con la calidad y la excelencia en el servicio nos ha posicionado como uno de los restaurantes más queridos de la ciudad.</p>
+                        <p>Utilizamos ingredientes frescos y de temporada, trabajando con productores locales para garantizar la máxima calidad en cada plato.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100 shadow">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="card-title mb-0">
+                            <i class="fas fa-bullseye me-2"></i>Nuestra Misión
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Brindar experiencias gastronómicas excepcionales que combinen:</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Ingredientes de primera calidad</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Técnicas culinarias innovadoras</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Servicio personalizado y cálido</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Ambiente acogedor y moderno</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Tecnología al servicio del cliente</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Características destacadas -->
+        <div class="row mb-5">
+            <div class="col">
+                <h2 class="text-center text-primary mb-4">¿Por qué elegir Restaurante Huergo?</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-award fa-2x"></i>
+                    </div>
+                    <h5>Calidad Premium</h5>
+                    <p class="text-muted">Ingredientes seleccionados y preparación artesanal en cada plato</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-leaf fa-2x"></i>
+                    </div>
+                    <h5>Ingredientes Frescos</h5>
+                    <p class="text-muted">Productos de temporada y proveedores locales comprometidos con la sostenibilidad</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-mobile-alt fa-2x"></i>
+                    </div>
+                    <h5>Tecnología Moderna</h5>
+                    <p class="text-muted">Sistema digital para pedidos y gestión, mejorando la experiencia del cliente</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información técnica -->
+        <div class="row mb-5">
+            <div class="col">
+                <div class="card border-warning">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="card-title mb-0">
+                            <i class="fas fa-code me-2"></i>Tecnología del Sistema
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Este sistema web está desarrollado con tecnologías modernas:</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="fab fa-java text-danger me-2"></i>Backend</h6>
+                                <ul class="list-unstyled ms-3">
+                                    <li>• Spring Boot 3.5.5</li>
+                                    <li>• Spring Data JPA</li>
+                                    <li>• Spring Security</li>
+                                    <li>• Base de datos H2</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i class="fab fa-html5 text-warning me-2"></i>Frontend</h6>
+                                <ul class="list-unstyled ms-3">
+                                    <li>• Thymeleaf Template Engine</li>
+                                    <li>• Bootstrap 5.3</li>
+                                    <li>• Font Awesome Icons</li>
+                                    <li>• Responsive Design</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contacto -->
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="card-title mb-0">
+                            <i class="fas fa-map-marker-alt me-2"></i>Información de Contacto
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-3">
+                                <i class="fas fa-map-marker-alt text-danger fa-2x mb-2"></i>
+                                <h6>Dirección</h6>
+                                <p class="text-muted">Av. Amancio Alcorta 1635<br>CABA, Argentina</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-3">
+                                <i class="fas fa-phone text-success fa-2x mb-2"></i>
+                                <h6>Teléfono</h6>
+                                <p class="text-muted">+54 11 1234-5678<br>+54 11 8765-4321</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-3">
+                                <i class="fas fa-envelope text-primary fa-2x mb-2"></i>
+                                <h6>Email</h6>
+                                <p class="text-muted">info@restaurantehuergo.com<br>reservas@restaurantehuergo.com</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <h6>Horarios de Atención</h6>
+                                <p class="text-muted">
+                                    <strong>Lunes a Viernes:</strong> 12:00 - 15:00 y 19:00 - 23:00<br>
+                                    <strong>Sábados y Domingos:</strong> 12:00 - 16:00 y 19:00 - 24:00
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-muted py-4 mt-5">
+        <div class="container">
+            <p>&copy; 2024 Restaurante Huergo - Todos los derechos reservados</p>
+            <p>
+                <i class="fas fa-envelope me-2"></i>info@restaurantehuergo.com
+                <span class="mx-3">|</span>
+                <i class="fas fa-phone me-2"></i>+54 11 1234-5678
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
