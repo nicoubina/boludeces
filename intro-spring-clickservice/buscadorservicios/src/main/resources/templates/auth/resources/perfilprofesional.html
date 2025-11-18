@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - ClickService</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #1e293b;
+            font-size: 1.75rem;
+        }
+
+        .btn-logout {
+            padding: 0.75rem 1.5rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-role {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            background: #f1f5f9;
+            border-radius: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .profile-stats {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .info-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            color: #1e293b;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .btn-edit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        @media (max-width: 968px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mi Perfil</h1>
+            <button class="btn-logout" onclick="window.location.href='/web/logout'">Cerrar Sesión</button>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <div class="profile-grid">
+            <!-- Sidebar con info básica -->
+            <div class="profile-card">
+                <div class="profile-avatar" th:text="${usuario.nombre.substring(0,1).toUpperCase()}">J</div>
+                <h2 class="profile-name" th:text="${usuario.nombre + ' ' + usuario.apellido}">Juan Pérez</h2>
+                <div class="profile-role">
+                    <span th:if="${isProfesional}">👨‍🔧 Profesional</span>
+                    <span th:if="${isCliente}">👤 Cliente</span>
+                    <span th:if="${isAdmin}">⚙️ Administrador</span>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Email</span>
+                        <span class="stat-value" th:text="${usuario.username}">usuario@mail.com</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">DNI</span>
+                        <span class="stat-value" th:text="${usuario.dni}">12345678</span>
+                    </div>
+                    <div class="stat-item" th:if="${isProfesional}">
+                        <span class="stat-label">Calificación</span>
+                        <span class="stat-value">⭐ 4.8</span>
+                    </div>
+                    <div class="stat-item" th:if="${isProfesional}">
+                        <span class="stat-label">Trabajos</span>
+                        <span class="stat-value">25 completados</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información detallada -->
+            <div class="info-section">
+                <h3 class="section-title">Información Personal</h3>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Nombre Completo</span>
+                        <div class="info-value" th:text="${usuario.nombre + ' ' + usuario.apellido}">Juan Carlos Pérez</div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Teléfono</span>
+                        <div class="info-value" th:text="${usuario.telefono}">11-2345-6789</div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Dirección</span>
+                        <div class="info-value" th:text="${usuario.calle + ' ' + usuario.altura}">Av. Corrientes 1234</div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <div class="info-value" th:text="${usuario.username}">juan@mail.com</div>
+                    </div>
+                </div>
+
+                <button class="btn-edit" onclick="alert('Funcionalidad de edición próximamente')">
+                    ✏️ Editar Perfil
+                </button>
+
+                <div th:if="${isProfesional}" style="margin-top: 2rem;">
+                    <h3 class="section-title">Información Profesional</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Especialidad</span>
+                            <div class="info-value">Plomería, Electricidad</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Zona de Trabajo</span>
+                            <div class="info-value">CABA - Zona Norte</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Estado</span>
+                            <div class="info-value">✅ Disponible</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Experiencia</span>
+                            <div class="info-value">10 años</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

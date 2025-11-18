@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Service - Encuentra los Mejores Profesionales</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-left">
+            <div class="nav-arrows">
+                <button>←</button>
+                <button>→</button>
+                <button>↻</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar por servicio/profesional...">
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="btn-secondary">Iniciar Sesión</button>
+            <a class="btn-primary" th:href="@{/web/registro}">Registrarse</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-logo"></div>
+        <div class="hero-content">
+            <h1>Encuentra los Mejores <span class="blue">Profesionales</span> <span class="yellow">de Servicios</span></h1>
+            <p>Conectamos con expertos verificados en plomería, electricidad, gas y mantenimiento general. Rápido, confiable y al mejor precio.</p>
+            <div class="search-box">
+                <h3>¿Qué necesitas para empezar?</h3>
+                <p>→ Tu ubicación</p>
+                <p>→ El servicio en cuestión</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Nuestros Servicios</h2>
+        <p class="services-subtitle">Encuentra profesionales especializados para cada necesidad de tu hogar</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop" alt="Plomería">
+                <div class="service-card-content">
+                    <h3>Plomería</h3>
+                    <p>Reparación de tuberías, grifos, inodoros y sistemas de agua</p>
+                    <div class="service-footer">
+                        <div class="rating"><span class="star">★</span><span>4.8</span></div>
+                        <span class="professionals">100 profesionales</span>
+                    </div>
+                    <button class="btn-primary">Ver profesionales</button>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=400&h=300&fit=crop" alt="Electricista">
+                <div class="service-card-content">
+                    <h3>Electricista</h3>
+                    <p>Instalación y reparación de sistemas eléctricos y mantenimiento</p>
+                    <div class="service-footer">
+                        <div class="rating"><span class="star">★</span><span>4.8</span></div>
+                        <span class="professionals">100 profesionales</span>
+                    </div>
+                    <button class="btn-primary">Ver profesionales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2>¿Cómo Funciona?</h2>
+        <p class="how-it-works-subtitle">En solo 4 pasos simples encuentra al profesional perfecto</p>
+        <div class="steps-grid">
+            <div class="step"><div class="step-icon"><span class="step-number">1</span></div><h3>Busca el servicio</h3></div>
+            <div class="step"><div class="step-icon"><span class="step-number">2</span></div><h3>Compara</h3></div>
+            <div class="step"><div class="step-icon"><span class="step-number">3</span></div><h3>Contrata</h3></div>
+            <div class="step"><div class="step-icon"><span class="step-number">4</span></div><h3>Califica</h3></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo"></div>
+                <div class="footer-brand-text">
+                    <h3>Click Service</h3>
+                    <p>Conecta clientes con profesionales de confianza.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

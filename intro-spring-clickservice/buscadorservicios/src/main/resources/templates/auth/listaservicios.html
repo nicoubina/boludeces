@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios Disponibles - ClickService</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        /* Search Bar */
+        .search-section {
+            max-width: 1400px;
+            margin: -2rem auto 2rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-search {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #4b5563;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .service-price {
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        .service-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .stat-icon {
+            font-size: 1.1rem;
+        }
+
+        .service-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .btn-view {
+            padding: 0.75rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-view:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-request {
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-request:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #9ca3af;
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: start;
+                gap: 1rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/web/" class="logo">
+                <div class="logo-icon">CS</div>
+                <span class="logo-text">ClickService</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/web/dashboard">Mi Panel</a>
+                <a href="/web/servicios">Servicios</a>
+                <a href="/web/perfil">Perfil</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Servicios Disponibles</h1>
+            <p>Encuentra profesionales calificados para todas tus necesidades del hogar</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-box">
+            <div class="search-input-wrapper">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Buscar servicios (plomería, electricidad, etc.)"
+                    id="searchInput"
+                >
+            </div>
+            <button class="btn-search" onclick="searchServices()">🔍 Buscar</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="section-header">
+            <h2 class="section-title">Todos los Servicios</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterServices('all')">Todos</button>
+                <button class="filter-btn" onclick="filterServices('popular')">Populares</button>
+                <button class="filter-btn" onclick="filterServices('low-price')">Mejor Precio</button>
+                <button class="filter-btn" onclick="filterServices('high-rating')">Mejor Calificados</button>
+            </div>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="services-grid" id="servicesGrid">
+            <!-- Service Card 1 -->
+            <div class="service-card" data-category="hogar">
+                <div class="service-image" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);"></div>
+                <div class="service-content">
+                    <div class="service-header">
+                        <div>
+                            <h3 class="service-title">Plomería</h3>
+                        </div>
+                        <div class="service-price">$2,500/h</div>
+                    </div>
+                    <p class="service-description">
+                        Reparación de cañerías, grifos, inodoros y sistemas de agua. Servicio de emergencia 24/7.
+                    </p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>4.8 (156)</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">👥</span>
+                            <span>85 profesionales</span>
+                        </div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-view">Ver Detalles</button>
+                        <button class="btn-request">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div class="service-card" data-category="hogar">
+                <div class="service-image" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);"></div>
+                <div class="service-content">
+                    <div class="service-header">
+                        <div>
+                            <h3 class="service-title">Electricidad</h3>
+                        </div>
+                        <div class="service-price">$3,000/h</div>
+                    </div>
+                    <p class="service-description">
+                        Instalación y reparación de sistemas eléctricos, tableros, iluminación y tomas.
+                    </p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>4.9 (203)</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">👥</span>
+                            <span>92 profesionales</span>
+                        </div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-view">Ver Detalles</button>
+                        <button class="btn-request">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div class="service-card" data-category="hogar">
+                <div class="service-image" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+                <div class="service-content">
+                    <div class="service-header">
+                        <div>
+                            <h3 class="service-title">Jardinería</h3>
+                        </div>
+                        <div class="service-price">$1,800/h</div>
+                    </div>
+                    <p class="service-description">
+                        Mantenimiento de jardines, poda, corte de césped y diseño de espacios verdes.
+                    </p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>4.7 (98)</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">👥</span>
+                            <span>54 profesionales</span>
+                        </div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-view">Ver Detalles</button>
+                        <button class="btn-request">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div class="service-card" data-category="hogar">
+                <div class="service-image" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);"></div>
+                <div class="service-content">
+                    <div class="service-header">
+                        <div>
+                            <h3 class="service-title">Carpintería</h3>
+                        </div>
+                        <div class="service-price">$2,800/h</div>
+                    </div>
+                    <p class="service-description">
+                        Fabricación y reparación de muebles, puertas, ventanas y trabajos en madera.
+                    </p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>4.8 (142)</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">👥</span>
+                            <span>67 profesionales</span>
+                        </div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-view">Ver Detalles</button>
+                        <button class="btn-request">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Card 5 -->
+            <div class="service-card" data-category="hogar">
+                <div class="service-image" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);"></div>
+                <div class="service-content">
+                    <div class="service-header">
+                        <div>
+                            <h3 class="service-title">Pintura</h3>
+                        </div>
+                        <div class="service-price">$2,200/h</div>
+                    </div>
+                    <p class="service-description">
+                        Pintura interior y exterior, restauración de superficies y acabados decorativos.
+                    </p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>4.6 (121)</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">👥</span>
+                            <span>78 profesionales</span>
+                        </div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-view">Ver Detalles</button>
+                        <button class="btn-request">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Card 6 -->
+            <div class="service-card" data-category="hogar">
+                <div class="service-image" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);"></div>
+                <div class="service-content">
+                    <div class="service-header">
+                        <div>
+                            <h3 class="service-title">Albañilería</h3>
+                        </div>
+                        <div class="service-price">$3,200/h</div>
+                    </div>
+                    <p class="service-description">
+                        Construcción, refacciones, revoques, colocación de pisos y revestimientos.
+                    </p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>4.9 (187)</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">👥</span>
+                            <span>103 profesionales</span>
+                        </div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-view">Ver Detalles</button>
+                        <button class="btn-request">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function searchServices() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.service-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.service-title').textContent.toLowerCase();
+                const description = card.querySelector('.service-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterServices(filter) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Simple filter logic (in real app, would sort/filter data)
+            console.log('Filtering by:', filter);
+        }
+
+        // Enable search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchServices();
+            }
+        });
+    </script>
+</body>
+</html>

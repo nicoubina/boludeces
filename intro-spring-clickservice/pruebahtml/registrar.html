@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarte - Click Service</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="registration-container">
+        <button class="modal-close" onclick="closeRegistrationModal()">×</button>
+        <h1>Registrarte</h1>
+        
+        <form>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido">
+            </div>
+
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="12.345.678">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Telefono</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="11 1234 5678">
+            </div>
+
+            <div class="form-group">
+                <label for="calle">Calle & altura</label>
+                <input type="text" id="calle" name="calle" placeholder="Ej.: corriente 1234">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="ejemplo@gmail.com">
+            </div>
+
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" placeholder="••••••••••">
+            </div>
+
+            <button type="submit" class="submit-button">
+                Iniciar sesion
+                <span class="arrow-icon">→</span>
+            </button>
+
+            <div class="login-link">
+                ¿ya tienes cuenta? <a href="#" onclick="closeRegistrationModal(); return false;">inicia sesion aqui</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
