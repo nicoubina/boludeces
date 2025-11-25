@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastBid — Eliminar Productos</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <img th:src="@{/images/logo.png}" alt="FastBid Logo" class="logo-img">
+      <div class="brand-text">
+        <h2>FastBid</h2>
+        <span class="tagline">Subastas rápidas y seguras</span>
+      </div>
+    </div>
+
+    <nav>
+      <a th:href="@{/}">Inicio</a>
+      <a th:href="@{/subastas/ver}">Subastas</a>
+
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Categorías</a>
+        <div class="dropdown-content">
+          <a href="#">Tecnología</a>
+          <a href="#">Hogar</a>
+          <a href="#">Moda</a>
+          <a href="#">Deportes</a>
+          <a href="#">Juguetes</a>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+    </nav>
+
+    <div class="user-actions">
+      <div class="balance">💰 $120000</div>
+      <a th:href="@{/productos/crear}" class="btn publish">Publicar producto</a>
+      <div class="user-info" sec:authorize="isAuthenticated()">
+        <span class="user-email" sec:authentication="name"></span>
+        <a th:href="@{/login?logout}" class="logout-link">Cerrar sesión</a>
+      </div>
+      <div class="auth-links" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="btn login">Iniciar sesión</a>
+        <a th:href="@{/registrar}" class="btn register">Registrarse</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+
+    <div class="page-header">
+      <div>
+        <h1>Eliminar productos</h1>
+        <p>Seleccioná los productos que ya no querés mostrar en tus publicaciones.</p>
+      </div>
+    </div>
+
+    <nav class="subnav">
+      <a th:href="@{/productos/mis}">Mis productos</a>
+      <a th:href="@{/productos/crear}">Crear producto</a>
+      <a th:href="@{/productos/eliminar}">Eliminar productos</a>
+    </nav>
+
+    <div class="flash success" th:if="${success}" th:text="${success}"></div>
+    <div class="flash error" th:if="${error}" th:text="${error}"></div>
+
+    <section th:if="${#lists.isEmpty(productos)}" class="empty-state">
+      <h2>No hay productos disponibles</h2>
+      <p>Por ahora no tenés productos para eliminar. Podés <a th:href="@{/productos/crear}">publicar uno nuevo</a> cuando quieras.</p>
+    </section>
+
+    <form th:if="${!#lists.isEmpty(productos)}" th:action="@{/productos/eliminar}" method="post">
+      <h1>Elegí qué productos eliminar</h1>
+      <p class="muted">Marcá uno o varios productos para retirarlos definitivamente.</p>
+
+      <div class="section-grid">
+        <label class="choice-item" th:each="producto : ${productos}">
+          <input type="checkbox" name="ids" th:value="${producto.idProducto}">
+          <div class="choice-content">
+            <strong th:text="${producto.nombre}">Nombre del producto</strong>
+            <span class="muted">
+              Categoría: <span th:text="${producto.categoria != null ? producto.categoria.nombre : 'Sin categoría'}"></span>
+              • Precio inicial: $<span th:text="${producto.precioInicial}"></span>
+              • Estado: <span th:text="${producto.estado}"></span>
+            </span>
+            <span class="muted" th:if="${producto.fechaFin != null}">
+              Finaliza: <span th:text="${#temporals.format(producto.fechaFin, 'dd/MM/yyyy HH:mm')}"></span>
+            </span>
+          </div>
+        </label>
+      </div>
+
+      <button type="submit">Eliminar seleccionados</button>
+    </form>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 FastBid. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>

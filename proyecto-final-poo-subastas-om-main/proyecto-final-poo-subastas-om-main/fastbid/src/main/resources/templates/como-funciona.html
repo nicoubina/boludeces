@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastBid — Cómo Funciona</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <img th:src="@{/images/logo.png}" alt="FastBid Logo" class="logo-img">
+      <div class="brand-text">
+        <h2>FastBid</h2>
+        <span class="tagline">Subastas rápidas y seguras</span>
+      </div>
+    </div>
+
+    <nav>
+      <a th:href="@{/}">Inicio</a>
+      <a th:href="@{/subastas/ver}">Subastas</a>
+
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Categorías</a>
+        <div class="dropdown-content">
+          <a href="#">Tecnología</a>
+          <a href="#">Hogar</a>
+          <a href="#">Moda</a>
+          <a href="#">Deportes</a>
+          <a href="#">Juguetes</a>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+    </nav>
+
+    <div class="user-actions">
+      <div class="balance">💰 $120000</div>
+      <a th:href="@{/productos/crear}" class="btn publish">Publicar producto</a>
+      <div class="user-info" sec:authorize="isAuthenticated()">
+        <span class="user-email" sec:authentication="name"></span>
+        <a th:href="@{/login?logout}" class="logout-link">Cerrar sesión</a>
+      </div>
+      <div class="auth-links" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="btn login">Iniciar sesión</a>
+        <a th:href="@{/registrar}" class="btn register">Registrarse</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+
+    <div class="page-header">
+      <div>
+        <h1>¿Cómo funciona FastBid?</h1>
+        <p>Participá en subastas de manera simple, rápida y segura.</p>
+      </div>
+    </div>
+
+    <section class="description">
+      <h2>Pasos para participar</h2>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-icon">📝</div>
+          <h3>Registrate</h3>
+          <p>Crea tu cuenta en FastBid para empezar a pujar en las subastas.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-icon">🔍</div>
+          <h3>Explorá productos</h3>
+          <p>Navegá entre categorías o buscá un producto específico que te interese.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-icon">💰</div>
+          <h3>Pujar o comprar</h3>
+          <p>Participá en las subastas en tiempo real o comprá al precio fijo.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-icon">🔒</div>
+          <h3>Seguridad</h3>
+          <p>Todas las transacciones son seguras y protegidas para tu tranquilidad.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-icon">📦</div>
+          <h3>Recibí tu producto</h3>
+          <p>Coordiná el envío o retiro del producto una vez ganada la subasta.</p>
+        </div>
+      </div>
+
+      <h2 style="margin-top:32px;">Consejos adicionales</h2>
+      <ul class="tips">
+        <li>Revisá siempre la descripción completa del producto.</li>
+        <li>Fijate el tiempo restante antes de pujar.</li>
+        <li>No sobrepases tu presupuesto.</li>
+        <li>Verificá la reputación del vendedor si aplica.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 FastBid. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>

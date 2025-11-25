@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastBid — Iniciar Sesión</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="login-page">
+
+  <div class="login-card">
+    <h1>Iniciar Sesión</h1>
+
+    <!-- mensajes estándar de Spring Security -->
+    <div th:if="${param.error}" class="msg error">Usuario o contraseña inválidos.</div>
+    <div th:if="${param.logout}" class="msg success">Sesión cerrada correctamente.</div>
+
+    <!-- opcionales desde el modelo -->
+    <div th:if="${error}" class="msg error" th:text="${error}"></div>
+    <div th:if="${success}" class="msg success" th:text="${success}"></div>
+
+    <form th:action="@{/login}" method="post">
+      <label>
+        Usuario o correo electrónico
+        <input type="text" name="username" placeholder="ejemplo@correo.com" required>
+      </label>
+
+      <label>
+        Contraseña
+        <input type="password" name="password" placeholder="********" required>
+      </label>
+
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <div class="links">
+      <p>¿No tenés cuenta? <a th:href="@{/registrar}">Registrate</a></p>
+      <p><a th:href="@{/}">← Volver al inicio</a></p>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+

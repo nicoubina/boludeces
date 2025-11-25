@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastBid — Mis Productos</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <img th:src="@{/images/logo.png}" alt="FastBid Logo" class="logo-img">
+      <div class="brand-text">
+        <h2>FastBid</h2>
+        <span class="tagline">Subastas rápidas y seguras</span>
+      </div>
+    </div>
+
+    <nav>
+      <a th:href="@{/}">Inicio</a>
+      <a th:href="@{/subastas/ver}">Subastas</a>
+
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Categorías</a>
+        <div class="dropdown-content">
+          <a href="#">Tecnología</a>
+          <a href="#">Hogar</a>
+          <a href="#">Moda</a>
+          <a href="#">Deportes</a>
+          <a href="#">Juguetes</a>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+    </nav>
+
+    <div class="user-actions">
+      <div class="balance">💰 $120000</div>
+      <a th:href="@{/productos/crear}" class="btn publish">Publicar producto</a>
+      <div class="user-info" sec:authorize="isAuthenticated()">
+        <span class="user-email" sec:authentication="name"></span>
+        <a th:href="@{/login?logout}" class="logout-link">Cerrar sesión</a>
+      </div>
+      <div class="auth-links" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="btn login">Iniciar sesión</a>
+        <a th:href="@{/registrar}" class="btn register">Registrarse</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+
+    <div class="page-header">
+      <div>
+        <h1>Mis productos</h1>
+        <p>Gestioná los artículos que publicaste y revisá su desempeño.</p>
+      </div>
+      <div class="page-actions">
+        <a th:href="@{/productos/crear}" class="btn publish">Nuevo producto</a>
+      </div>
+    </div>
+
+    <nav class="subnav">
+      <a th:href="@{/productos/mis}">Mis productos</a>
+      <a th:href="@{/productos/crear}">Crear producto</a>
+      <a th:href="@{/productos/eliminar}">Eliminar productos</a>
+    </nav>
+
+    <div class="flash success" th:if="${success}" th:text="${success}"></div>
+    <div class="flash error" th:if="${error}" th:text="${error}"></div>
+
+    <section th:if="${#lists.isEmpty(productos)}" class="empty-state">
+      <h2>Aún no publicaste productos</h2>
+      <p>Cuando publiques productos, van a aparecer en esta lista. Podés comenzar <a th:href="@{/productos/crear}">creando uno nuevo</a>.</p>
+    </section>
+
+    <section th:if="${!#lists.isEmpty(productos)}" class="card-table">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio inicial</th>
+            <th>Fin de subasta</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="producto : ${productos}">
+            <td th:text="${producto.nombre}">Nombre del producto</td>
+            <td th:text="${producto.categoria != null ? producto.categoria.nombre : 'Sin categoría'}">Categoría</td>
+            <td th:text="${producto.precioInicial}">$0.00</td>
+            <td th:text="${producto.fechaFin != null ? #temporals.format(producto.fechaFin, 'dd/MM/yyyy HH:mm') : '-'}">01/01/2024 12:00</td>
+            <td>
+              <span class="badge" th:classappend="${producto.estado != null && producto.estado.equalsIgnoreCase('ACTIVO')} ? ' badge-success' : ' badge-neutral'"
+                    th:text="${producto.estado != null ? producto.estado : 'Sin estado'}"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 FastBid. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>

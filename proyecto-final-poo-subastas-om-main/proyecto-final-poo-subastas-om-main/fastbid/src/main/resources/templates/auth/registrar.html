@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastBid — Crear Cuenta</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body class="login-page">
+
+  <div class="login-card">
+    <h1>Crear cuenta</h1>
+    <p class="muted">Unite a FastBid para empezar a comprar y vender en subastas dinámicas.</p>
+
+    <div th:if="${error}" class="msg error" th:text="${error}"></div>
+    <div th:if="${success}" class="msg success" th:text="${success}"></div>
+
+    <form th:action="@{/registrar}" method="post">
+      <label for="username">
+        Email / Usuario
+        <input type="email" id="username" name="username" placeholder="tu@email.com" required>
+      </label>
+
+      <label for="password">
+        Contraseña
+        <input type="password" id="password" name="password"
+               placeholder="Mínimo 16 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial" required>
+      </label>
+
+      <label for="verificacionPassword">
+        Confirmar contraseña
+        <input type="password" id="verificacionPassword" name="verificacionPassword" placeholder="Repetí tu contraseña" required>
+      </label>
+
+      <button type="submit">Crear cuenta</button>
+    </form>
+
+    <div class="links">
+      <p>¿Ya tenés cuenta? <a th:href="@{/login}">Iniciá sesión</a></p>
+      <p><a th:href="@{/}">← Volver al inicio</a></p>
+    </div>
+  </div>
+
+</body>
+</html>

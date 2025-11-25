@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastBid — Crear Producto</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <img th:src="@{/images/logo.png}" alt="FastBid Logo" class="logo-img">
+      <div class="brand-text">
+        <h2>FastBid</h2>
+        <span class="tagline">Subastas rápidas y seguras</span>
+      </div>
+    </div>
+
+    <nav>
+      <a th:href="@{/}">Inicio</a>
+      <a th:href="@{/subastas/ver}">Subastas</a>
+
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Categorías</a>
+        <div class="dropdown-content">
+          <a href="#">Tecnología</a>
+          <a href="#">Hogar</a>
+          <a href="#">Moda</a>
+          <a href="#">Deportes</a>
+          <a href="#">Juguetes</a>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+    </nav>
+
+    <div class="user-actions">
+      <div class="balance">💰 $120000</div>
+      <a th:href="@{/productos/crear}" class="btn publish">Publicar producto</a>
+      <div class="user-info" sec:authorize="isAuthenticated()">
+        <span class="user-email" sec:authentication="name"></span>
+        <a th:href="@{/login?logout}" class="logout-link">Cerrar sesión</a>
+      </div>
+      <div class="auth-links" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="btn login">Iniciar sesión</a>
+        <a th:href="@{/registrar}" class="btn register">Registrarse</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+
+    <div class="page-header">
+      <div>
+        <h1>Crear producto</h1>
+        <p>Completá la información para publicar un nuevo producto en tus subastas.</p>
+      </div>
+    </div>
+
+    <nav class="subnav">
+      <a th:href="@{/productos/mis}">Mis productos</a>
+      <a th:href="@{/productos/crear}">Crear producto</a>
+      <a th:href="@{/productos/eliminar}">Borrar producto</a>
+      <a th:href="@{/categorias/ver}">Gestionar categorías</a>
+    </nav>
+
+    <form th:action="@{/productos/crear}" th:object="${productoForm}" method="post">
+      <h1>Datos del producto</h1>
+      <p>Los mejores productos tienen descripciones claras, imágenes atractivas y precios competitivos.</p>
+
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" th:field="*{nombre}" placeholder="Ej. Cámara réflex" required>
+        <div class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+      </div>
+
+      <div class="field">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" th:field="*{descripcion}" placeholder="Contá los detalles más importantes"></textarea>
+        <div class="error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+      </div>
+
+      <div class="field">
+        <label for="precioInicial">Precio inicial</label>
+        <input id="precioInicial" type="number" min="0" step="0.01" th:field="*{precioInicial}" required>
+        <div class="error" th:if="${#fields.hasErrors('precioInicial')}" th:errors="*{precioInicial}"></div>
+      </div>
+
+      <div class="field">
+        <label for="imagenesTexto">Imágenes (una URL por línea)</label>
+        <textarea id="imagenesTexto" th:field="*{imagenesTexto}" placeholder="https://..."></textarea>
+        <div class="hint">Ingresá al menos una URL. Podés pegar varias, una debajo de la otra.</div>
+        <div class="error" th:if="${#fields.hasErrors('imagenesTexto')}" th:errors="*{imagenesTexto}"></div>
+      </div>
+
+      <div class="field">
+        <label for="categoriaId">Categoría</label>
+        <div class="hint" th:if="${cantidadCategorias == 0}">
+          No hay categorías disponibles. <a th:href="@{/categorias/crear}">Creá una nueva</a> para poder publicarla.
+        </div>
+        <div class="hint" th:if="${cantidadCategorias > 0}">
+          Categorías disponibles: <strong th:text="${cantidadCategorias}"></strong>
+        </div>
+        <div class="hint" id="categoriaSeleccionHint"
+             th:text="${categoriaSeleccionadaNombre != null} ? 'Seleccionada: ' + categoriaSeleccionadaNombre : 'Seleccioná una categoría.'"></div>
+        <select id="categoriaId" th:field="*{categoriaId}" th:disabled="${cantidadCategorias == 0}" required>
+          <option value="" disabled th:selected="${productoForm.categoriaId == null}">Seleccioná una categoría</option>
+          <option th:each="categoria : ${categorias}"
+                  th:value="${categoria.idCategoria}"
+                  th:text="${categoria.nombre}"></option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('categoriaId')}" th:errors="*{categoriaId}"></div>
+      </div>
+
+      <div class="field">
+        <label for="fechaFin">Fin de la subasta</label>
+        <input id="fechaFin" type="datetime-local" th:field="*{fechaFin}" required>
+        <div class="error" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></div>
+      </div>
+
+      <div class="field">
+        <label for="precioCompraInmediata">Precio de compra inmediata (opcional)</label>
+        <input id="precioCompraInmediata" type="number" min="0" step="0.01" th:field="*{precioCompraInmediata}">
+        <div class="error" th:if="${#fields.hasErrors('precioCompraInmediata')}" th:errors="*{precioCompraInmediata}"></div>
+      </div>
+
+      <div class="field">
+        <label for="condicion">Condición</label>
+        <select id="condicion" th:field="*{condicion}">
+          <option value="">Seleccioná una opción</option>
+          <option value="NUEVO">Nuevo</option>
+          <option value="USADO">Usado</option>
+          <option value="REACONDICIONADO">Reacondicionado</option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('condicion')}" th:errors="*{condicion}"></div>
+      </div>
+
+      <div class="field">
+        <label for="ubicacion">Ubicación</label>
+        <input id="ubicacion" type="text" th:field="*{ubicacion}" placeholder="Ciudad, país">
+        <div class="error" th:if="${#fields.hasErrors('ubicacion')}" th:errors="*{ubicacion}"></div>
+      </div>
+
+      <div class="field">
+        <label for="cantidad">Cantidad disponible</label>
+        <input id="cantidad" type="number" min="1" step="1" th:field="*{cantidad}" required>
+        <div class="error" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></div>
+      </div>
+
+      <button type="submit">Publicar producto</button>
+    </form>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 FastBid. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    (function() {
+        const select = document.getElementById('categoriaId');
+        const hint = document.getElementById('categoriaSeleccionHint');
+        if (!select || !hint) {
+            return;
+        }
+
+        const actualizar = () => {
+            const opcion = select.options[select.selectedIndex];
+            if (opcion && opcion.value) {
+                hint.textContent = `Seleccionada: ${opcion.textContent}`;
+            } else {
+                hint.textContent = 'Seleccioná una categoría.';
+            }
+        };
+
+        actualizar();
+        select.addEventListener('change', actualizar);
+    })();
+  </script>
+</body>
+</html>
